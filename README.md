@@ -19,6 +19,7 @@ The console will output logging information that includes:
 - The average wait time after the simulation ends.
 
 ### Example Output
+```text
 2025-01-08 19:48:45,248 - INFO - New customer 0 arrived at minute 1.
 2025-01-08 19:48:45,248 - INFO - Customer 0 attended at minute 1 after waiting 0 minutes.
 2025-01-08 19:48:50,272 - INFO - New customer 1 arrived at minute 6.
@@ -32,7 +33,7 @@ The console will output logging information that includes:
 2025-01-08 19:49:04,330 - INFO - New customer 5 arrived at minute 20.
 2025-01-08 19:49:05,336 - INFO - New customer 6 arrived at minute 21.
 2025-01-08 19:49:07,347 - INFO - Customer 5 attended at minute 23 after waiting 3 minutes.
-
+```
 
 ### Notes
 - Each minute of real time is simulated as a one-second interval in this script, so the total run time of the script will be approximately 60 seconds.
