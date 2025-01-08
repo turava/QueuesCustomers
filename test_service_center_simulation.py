@@ -1,6 +1,6 @@
 # test_service_center_simulation.py
 import unittest
-from service_center_simulation import simulate_service_center
+from service_center_library_queue import simulate_service_center
 
 class TestServiceCenterSimulation(unittest.TestCase):
     def test_average_wait_time_controlled_conditions(self):
