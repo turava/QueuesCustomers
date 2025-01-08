@@ -24,36 +24,34 @@ class Customer:
         self.wait_time = self.attention_time - self.arrival_time
         logging.info(f'Customer {self.id} attended at minute {self.attention_time} after waiting {self.wait_time} minutes.')
 
-def simulate_service_center():
+def simulate_service_center(runtime_minutes=60, max_arrival_interval=3, service_time_range=(2, 5), speed_up_factor=1):
     customers = Queue()
     current_time = 0
     total_wait_time = 0
     num_customers_served = 0
-    next_free_time = 0  # Track when the current service will be finished
+    next_free_time = 0  # Add a tracker for when the next customer can be attended
 
-    while current_time < 60:
-        if random.randint(1, 3) == 1:
+    while current_time < runtime_minutes:
+        if random.randint(1, max_arrival_interval) == 1:
             customer = Customer(current_time)
             customers.put(customer)
-            logging.info(f'New customer {customer.id} arrived at minute {current_time}.')
 
         if current_time >= next_free_time and not customers.empty():
             next_customer = customers.get()
-            service_time = random.randint(2, 5)  # Customer is attended for 1 to 5 minutes
+            service_time = random.randint(*service_time_range)
             next_customer.set_attention_time(current_time)
-            next_free_time = current_time + service_time  # Update next free time based on service duration
+            next_free_time = current_time + service_time  # Update when the next customer can be attended
             total_wait_time += next_customer.wait_time
             num_customers_served += 1
 
-        time.sleep(1)
+        time.sleep(1 / speed_up_factor)  # Speed up the simulation for testing
         current_time += 1
 
-    # Output average wait time
-    if num_customers_served > 0:
-        average_wait_time = total_wait_time / num_customers_served
-        logging.info(f'Average wait time for customers: {average_wait_time:.2f} minutes')
-    else:
-        logging.info("No customers were served.")
+    average_wait_time = total_wait_time / num_customers_served if num_customers_served > 0 else 0
+    return average_wait_time
+
 
 if __name__ == "__main__":
-    simulate_service_center()
+    logging.basicConfig(level=logging.INFO)
+    avg_wait_time = simulate_service_center()
+    logging.info(f"Average wait time: {avg_wait_time:.2f} minutes")
